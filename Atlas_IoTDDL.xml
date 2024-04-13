@@ -1,0 +1,402 @@
+<Atlas_IoTDDL>
+	<Atlas_Thing>
+		<Descriptive_Metadata>
+			<Thing_ATID>g6</Thing_ATID>
+			<Thing_Name></Thing_Name>
+			<Thing_Owner></Thing_Owner>
+			<Thing_Vendor></Thing_Vendor>
+			<Thing_Model></Thing_Model>
+			<Thing_ReleaseDate>8/2020</Thing_ReleaseDate>
+			<Thing_Type></Thing_Type>
+			<Thing_OperatingSystem></Thing_OperatingSystem>
+			<Thing_ShortDescription></Thing_ShortDescription>
+			<LongDescription></LongDescription>
+			<Thing_SSID>g6Space</Thing_SSID>
+			<Space_Coordinates></Space_Coordinates>
+			<Space_Name></Space_Name>
+			<Space_Description></Space_Description>
+			<Space_Constraints>
+				<Temperature>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Temperature>
+				<Humidity>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Humidity>
+				<Voltage>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Voltage>
+				<Radio_Interference_Radius></Radio_Interference_Radius>
+				<Safe_Temperature_Radius></Safe_Temperature_Radius>
+			</Space_Constraints>
+		</Descriptive_Metadata>
+		<Administrative_Metadata>
+			<Network_Manager>
+				<Module></Module>
+				<Type></Type>
+				<Network_Name>N-302@The_enclave</Network_Name>
+				<Network_Passcode>e7xhSYPXZ</Network_Passcode>
+				<MulticastGroup>
+					<IP>232.1.1.1</IP>
+					<Port>1235</Port>
+				</MulticastGroup>
+				<Communication_Protocol></Communication_Protocol>
+				<InterOperableCommunication>
+					<Broker>
+						<Vendor>HiveMQ</Vendor>
+						<Dashboard>http://www.mqtt-dashboard.com/</Dashboard>
+						<IP>broker.hivemq.com</IP>
+						<Port>1883</Port>
+					</Broker>
+					<Topic>
+						<Root>/Atlas</Root>
+						<Network_MQTTClient>/Network/MQTT_Client</Network_MQTTClient>
+						<Network_PrivateBroker>/Network/Private_Broker</Network_PrivateBroker>
+						<Multicast_ThingIdentity>/Multicast/Tweet_ThingIdentity</Multicast_ThingIdentity>
+						<Multicast_EntityIdentity>/Multicast/Tweet_EntityIdentity</Multicast_EntityIdentity>
+						<Multicast_API>/Multicast/API</Multicast_API>
+						<Unicast>/Unicast/Interaction</Unicast>
+					</Topic>
+				</InterOperableCommunication>
+				<OMA_DM>
+					<AccessName>Eclipse Leshan</AccessName>
+					<IP>coap://leshan.eclipseprojects.io</IP>
+					<Port>5683</Port>
+				</OMA_DM>
+			</Network_Manager>
+			<Memory_Manager>
+				<Store_Format></Store_Format>
+				<MemoryUnit_Application></MemoryUnit_Application>
+				<MemoryUnit_Knowledge></MemoryUnit_Knowledge>
+			</Memory_Manager>
+		</Administrative_Metadata>
+		<Thing_Attachment>
+
+		</Thing_Attachment>
+		<Structural_Metadata>
+			<Number_Hardware>0</Number_Hardware>
+			<Number_Software>0</Number_Software>
+			<Number_Hybrid>0</Number_Hybrid>
+			<Number_Entities>2</Number_Entities>
+		</Structural_Metadata>
+	</Atlas_Thing>
+	<Atlas_Entities>
+		<Entity_1>
+			<Descriptive_Metadata>
+				<ID>LED</ID>
+				<Name>LED</Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description>LED Thing</Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>TurnOnRedLED</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Action</Type>
+					<Keywords>turn_on_red</Keywords>
+					<Description>Turn on the red LED</Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode>Single</Usage_Mode>
+						<Concurrent>No</Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription></OutputDescription>
+					<OutputType>void</OutputType>
+					<Service_Formula><![CDATA[
+wiringPiSetupGpio();
+int red = 17;
+pinMode(red, OUTPUT);
+digitalWrite(red, HIGH);
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_1>
+				<Service_2>
+					<Name>TurnOffRedLED</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Action</Type>
+					<Keywords>turn_off_red</Keywords>
+					<Description>Turn off the red LED</Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode>Single</Usage_Mode>
+						<Concurrent>No</Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription></OutputDescription>
+					<OutputType>void</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+wiringPiSetupGpio();
+int red = 17;
+pinMode(red, OUTPUT);
+digitalWrite(red, LOW);
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_2>
+				<Service_3>
+					<Name>TurnOnGreenLED</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Action</Type>
+					<Keywords>turn_on_green</Keywords>
+					<Description></Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode>Single</Usage_Mode>
+						<Concurrent>No</Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>11pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>11:30pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription></OutputDescription>
+					<OutputType>void</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+wiringPiSetupGpio();
+int green = 27;
+pinMode(green, OUTPUT);
+digitalWrite(green, HIGH);
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_3>
+				<Service_4>
+					<Name>TurnOffGreenLED</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Action</Type>
+					<Keywords>turn_off_green</Keywords>
+					<Description></Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode></Usage_Mode>
+						<Concurrent></Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>11pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>11:30pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription></OutputDescription>
+					<OutputType>void</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+wiringPiSetupGpio();
+int green = 27;
+pinMode(green, OUTPUT);
+digitalWrite(green, LOW);
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_4>
+				<Number_Services>4</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_1>
+		<Entity_2>
+			<Descriptive_Metadata>
+				<ID>DHT11</ID>
+				<Name>DHT11</Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description>TempAndHumi</Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>Temperature</Name>
+					<AppCategory>Environment Monitor</AppCategory>
+					<Type>Report</Type>
+					<Keywords>temperature</Keywords>
+					<Description>temputre info</Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode>Single</Usage_Mode>
+						<Concurrent>No</Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>6am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>6am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription>tem</OutputDescription>
+					<OutputType>int</OutputType>
+					<Service_Formula><![CDATA[
+wiringPiSetupGpio();
+int HIGH_TIME = 32;
+uint32_t databuf;
+uint crc = 0;
+uint i;
+int pinNumber = 14;
+pinMode(pinNumber, OUTPUT);
+digitalWrite(pinNumber, 0);
+delay(25);
+digitalWrite(pinNumber, 1);
+pinMode(pinNumber, INPUT);
+pullUpDnControl(pinNumber, PUD_UP);
+
+delayMicroseconds(27);
+if (digitalRead(pinNumber) == 0) {
+while (!digitalRead(pinNumber));
+
+for (i = 0; i < 32; i++) {
+    while (digitalRead(pinNumber));
+    while (!digitalRead(pinNumber));
+    delayMicroseconds(HIGH_TIME);
+    databuf <<= 1;
+    if (digitalRead(pinNumber) == 1) {
+        databuf++;
+    }
+}
+
+for (i = 0; i < 8; i++) {
+    while (digitalRead(pinNumber));
+    while (!digitalRead(pinNumber));
+    delayMicroseconds(HIGH_TIME);
+    crc <<= 1;
+    if (digitalRead(pinNumber) == 1) {
+        crc++;
+    }
+}
+}
+tem = (databuf >> 8) & 0xFF;
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_1>
+				<Service_2>
+					<Name>Humidity</Name>
+					<AppCategory>Environment Monitor</AppCategory>
+					<Type>Report</Type>
+					<Keywords>humidity</Keywords>
+					<Description>humidity info</Description>
+					<Contextual_Constraints>
+						<Time_Window>5seconds</Time_Window>
+						<Usage_Mode>Single</Usage_Mode>
+						<Concurrent>No</Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>6am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>6:30am</StartTime>
+							<EndTime>11:59pm</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription>hum</OutputDescription>
+					<OutputType>int</OutputType>
+					<Service_Formula><![CDATA[
+wiringPiSetupGpio();
+int HIGH_TIME = 32;
+uint32_t databuf;
+uint crc = 0;
+uint i;
+int pinNumber = 14;
+pinMode(pinNumber, OUTPUT);
+digitalWrite(pinNumber, 0);
+delay(25);
+digitalWrite(pinNumber, 1);
+pinMode(pinNumber, INPUT);
+pullUpDnControl(pinNumber, PUD_UP);
+
+delayMicroseconds(27);
+if (digitalRead(pinNumber) == 0) {
+while (!digitalRead(pinNumber));
+
+for (i = 0; i < 32; i++) {
+    while (digitalRead(pinNumber));
+    while (!digitalRead(pinNumber));
+    delayMicroseconds(HIGH_TIME);
+    databuf <<= 1;
+    if (digitalRead(pinNumber) == 1) {
+        databuf++;
+    }
+}
+
+for (i = 0; i < 8; i++) {
+    while (digitalRead(pinNumber));
+    while (!digitalRead(pinNumber));
+    delayMicroseconds(HIGH_TIME);
+    crc <<= 1;
+    if (digitalRead(pinNumber) == 1) {
+        crc++;
+    }
+}
+}
+hum = (databuf >> 24) & 0xFF;
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_2>
+				<Number_Services>2</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_2>
+	</Atlas_Entities>
+</Atlas_IoTDDL>

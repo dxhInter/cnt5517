@@ -1,0 +1,124 @@
+{
+  "things": [
+    {
+      "id": "g6",
+      "name": "",
+      "desc": "",
+      "icon": null,
+      "space": "g6Space",
+      "ip": "10.20.0.58"
+    },
+    {
+      "id": "g62",
+      "name": "",
+      "desc": "",
+      "icon": null,
+      "space": "g62Space",
+      "ip": "10.20.0.58"
+    }
+  ],
+  "services": [
+    {
+      "thing": "g6",
+      "name": "Temperature",
+      "id": "Temperature",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "Humidity",
+      "id": "Humidity",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g62",
+      "name": "TurnOnRedLED",
+      "id": "TurnOnRedLED",
+      "entity": "LED",
+      "space": "g62Space",
+      "icon": ""
+    },
+    {
+      "thing": "g62",
+      "name": "TurnOffRedLED",
+      "id": "TurnOffRedLED",
+      "entity": "LED",
+      "space": "g62Space",
+      "icon": ""
+    },
+    {
+      "thing": "g62",
+      "name": "TurnOnGreenLED",
+      "id": "TurnOnGreenLED",
+      "entity": "LED",
+      "space": "g62Space",
+      "icon": ""
+    },
+    {
+      "thing": "g62",
+      "name": "TurnOffGreenLED",
+      "id": "TurnOffGreenLED",
+      "entity": "LED",
+      "space": "g62Space",
+      "icon": ""
+    }
+  ],
+  "relationships": [
+    {
+      "name": "relationship",
+      "id": "relationship",
+      "icon": "",
+      "desc": "Created relation",
+      "service1": "TurnOnLED",
+      "service2": "SMSStatus"
+    },
+    {
+      "name": "TestDummy",
+      "id": "TestDummy",
+      "icon": "",
+      "desc": "DummyDesc",
+      "service1": "TurnOffLED",
+      "service2": "TurnOnLED"
+    },
+    {
+      "name": "ImportedRel",
+      "id": "ImportedRel",
+      "icon": null,
+      "desc": "ImportedRel",
+      "service1": "TurnOnLED",
+      "service2": "TurnOffLED"
+    },
+    {
+      "name": "",
+      "id": "",
+      "icon": "",
+      "desc": "Created relation",
+      "service1": "BeepBuzzer",
+      "service2": "TurnOffLED"
+    }
+  ],
+  "recipes": [
+    {
+      "name": "Hello",
+      "id": "Hello",
+      "relationships": [
+        "TestDummy"
+      ],
+      "icon": "",
+      "enabled": true
+    },
+    {
+      "name": "Imported1",
+      "id": "Imported1",
+      "relationships": [
+        "ImportedRel"
+      ],
+      "icon": "",
+      "enabled": false
+    }
+  ]
+}
