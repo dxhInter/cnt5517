@@ -1,5 +1,7 @@
 import json
 
+import atlas_manager
+
 
 def load_data():
     try:
@@ -147,3 +149,24 @@ def create_app(**kwargs):
     except Exception as e:
         print(f"Error creating app: {e}")
         return False
+
+
+def get_app(app_id):
+    data = load_data()
+    for app in data.get('apps', []):
+        if app['id'] == app_id:
+            return app
+    return None
+
+def run_app(data):
+    app = get_app(data)['app_id']
+    threshold = get_app(data)['threshold']
+    relationship = app.get('relationships')
+    if relationship == 'order':
+        return atlas_manager.order(app)
+    else:
+        return atlas_manager.condition(app, threshold)
+
+
+def put_threshold(data):
+    return None

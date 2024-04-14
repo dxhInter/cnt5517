@@ -34,7 +34,7 @@ def create_relationship():
 
 
 @app.route('/apps', methods=['POST'])
-def create_recipe():
+def create_app():
     if not request.is_json:
         return jsonify({'code': 400, 'msg': 'No data provided'}), 400
     data = request.json
@@ -42,8 +42,24 @@ def create_recipe():
     return jsonify(result), result['code']
 
 @app.route('/apps/<app_id>', methods=['GET'])
-def run_app(app_id):
-    result = service.run_app(app_id)
+def get_app(app_id):
+    result = service.get_app(app_id)
+    return jsonify(result), result['code']
+
+@app.route('/apps/run', methods=['POST'])
+def run_app():
+    if not request.is_json:
+        return jsonify({'code': 400, 'msg': 'No data provided'}), 400
+    data = request.json
+    result = service.run_app(data)
+    return jsonify(result), result['code']
+
+@app.route('/apps/threshold', methods=['POST'])
+def put_threshold():
+    if not request.is_json:
+        return jsonify({'code': 400, 'msg': 'No data provided'}), 400
+    data = request.json
+    result = service.put_threshold(data)
     return jsonify(result), result['code']
 
 if __name__ == '__main__':

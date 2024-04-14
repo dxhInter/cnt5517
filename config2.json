@@ -10,6 +10,62 @@
     }
   ],
   "services": [
+    {
+      "thing": "g6",
+      "name": "TurnOnRedLED",
+      "entity": "LED",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "TurnOffRedLED",
+      "entity": "LED",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "TurnOnGreenLED",
+      "entity": "LED",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "TurnOffGreenLED",
+      "entity": "LED",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "Temperature",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "Humidity",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "HumidityCheck",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    },
+    {
+      "thing": "g6",
+      "name": "BlinkGreen",
+      "entity": "DHT11",
+      "space": "g6Space",
+      "icon": ""
+    }
   ],
   "relationships": [
     {
@@ -31,13 +87,13 @@
       "icon": ""
     }
   ],
-  "recipes": [
+  "app": [
     {
       "name": "Hello",
       "id": "Hello",
-      "relationships": [
-        "TestDummy"
-      ],
+      "relationship": "condition",
+      "service1" : "TurnOnRedLED",
+      "service2" : "TurnOnGreenLED",
       "icon": "",
       "enabled": true
     },

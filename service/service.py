@@ -73,7 +73,32 @@ def create_app(data):
     except Exception as e:
         return response(500, message=str(e))
 
+# data包含app_id, threshold
+def run_app(data):
+    try:
+        result = dao.run_app(data)
+        if result:
+            return response(200, result)
+        else:
+            return response(400, message='Failed to run app.')
+    except Exception as e:
+        return response(500, message=str(e))
 
-def run_app(app_id):
 
-    return None
+def get_app(app_id):
+    try:
+        apps = dao.get_app(app_id)
+        return response(200, apps)
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def put_threshold(data):
+    try:
+        result = dao.put_threshold(data)
+        if result:
+            return response(200, message='Threshold updated successfully.')
+        else:
+            return response(400, message='Failed to update threshold.')
+    except Exception as e:
+        return response(500, message=str(e))
