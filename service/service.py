@@ -61,3 +61,19 @@ def create_relationship(data):
             return response(400, message='Failed to create relationship. Required fields are missing.')
     except Exception as e:
         return response(500, message=str(e))
+
+
+def create_app(data):
+    try:
+        result = dao.create_app(**data)
+        if result:
+            return response(201, message='App created successfully.')
+        else:
+            return response(400, message='Failed to create app. Required fields are missing.')
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def run_app(app_id):
+
+    return None

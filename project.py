@@ -33,5 +33,18 @@ def create_relationship():
     return jsonify(result), result['code']
 
 
+@app.route('/apps', methods=['POST'])
+def create_recipe():
+    if not request.is_json:
+        return jsonify({'code': 400, 'msg': 'No data provided'}), 400
+    data = request.json
+    result = service.create_app(data)
+    return jsonify(result), result['code']
+
+@app.route('/apps/<app_id>', methods=['GET'])
+def run_app(app_id):
+    result = service.run_app(app_id)
+    return jsonify(result), result['code']
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8888)

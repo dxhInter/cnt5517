@@ -124,3 +124,28 @@ def create_relationship(**kwargs):
     except Exception as e:
         print(f"Error creating relationship: {e}")
         return False
+
+
+def create_app(**kwargs):
+    required_fields = ['name', 'id', 'relationships', 'service1', 'service2', 'enabled']
+    if not all(key in kwargs for key in required_fields):
+        return False
+
+    new_app = {field: kwargs[field] for field in required_fields}
+    if 'icon' in kwargs:
+        new_app['icon'] = kwargs['icon']
+    else:
+        new_app['icon'] = ''
+
+    try:
+        data = load_data()
+        if any(app['name'] == new_app['name'] for app in data.get('apps', [])):
+            data['apps'] = [app if app['name'] != new_app['name'] else new_app for app in data.get('apps', [])]
+        else:
+            data.setdefault('apps', []).append(new_app)
+
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error creating app: {e}")
+        return False
