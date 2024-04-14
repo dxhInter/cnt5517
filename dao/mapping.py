@@ -69,12 +69,10 @@ def get_all_services():
     data = load_data()
     return data.get('services', [])
 
-# 获取特定thing的服务
 def get_services_of_thing(thing_id):
     services = get_all_services()
     return [service for service in services if service.get('thing') == thing_id]
 
-# ...其他 get 方法...
 
 def create_service(**kwargs):
     required_fields = ['thing', 'name', 'entity', 'space']
