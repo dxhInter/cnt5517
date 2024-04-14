@@ -20,8 +20,17 @@ def create_service():
     if not request.is_json:
         return jsonify({'code': 400, 'msg': 'No data provided'}), 400
     data = request.json
-    print(data)
-    return jsonify({'code': 200, 'msg': 'Service created'}), 200
+    result = service.create_service(data)
+    return jsonify(result), result['code']
+
+
+@app.route('/relationships', methods=['POST'])
+def create_relationship():
+    if not request.is_json:
+        return jsonify({'code': 400, 'msg': 'No data provided'}), 400
+    data = request.json
+    result = service.create_relationship(data)
+    return jsonify(result), result['code']
 
 
 if __name__ == '__main__':

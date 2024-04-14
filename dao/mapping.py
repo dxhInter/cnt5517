@@ -3,22 +3,22 @@ import json
 
 def load_data():
     try:
-        with open('config.json', 'r') as f:
+        with open('config.iot', 'r') as f:
             return json.load(f)
     except json.JSONDecodeError as e:
-        raise Exception(f"Error reading config.json: {e}")
+        raise Exception(f"Error reading config.iot: {e}")
     except FileNotFoundError:
-        raise Exception("config.json file not found.")
+        raise Exception("config.iot file not found.")
     except Exception as e:
         raise Exception(f"An unexpected error occurred: {e}")
 
 
 def save_data(data):
     try:
-        with open('config.json', 'w') as f:
+        with open('config.iot', 'w') as f:
             json.dump(data, f, indent=4)
     except Exception as e:
-        raise Exception(f"Error saving to config.json: {e}")
+        raise Exception(f"Error saving to config.iot: {e}")
 
 
 def get_all_things():
@@ -58,7 +58,7 @@ def create_thing(**kwargs):
 
         data['things'] = updated_things
 
-        f = open('config.json', 'w')
+        f = open('config.iot', 'w')
         json.dump(data, f)
         f.close()
         return True
@@ -84,6 +84,8 @@ def create_service(**kwargs):
     new_service = {field: kwargs[field] for field in required_fields}
     if 'icon' in kwargs:
         new_service['icon'] = kwargs['icon']
+    else:
+        new_service['icon'] = ''
 
     try:
         data = load_data()
@@ -96,4 +98,29 @@ def create_service(**kwargs):
         return True
     except Exception as e:
         print(f"Error creating service: {e}")
+        return False
+
+# {'thing': 'g6', 'space': 'g6Space', 'name': 'REDANDGREEN', 'type': 'control', 'fs': 'TurnOnRedLED', 'ss': 'TurnOnGreenLED'}
+def create_relationship(**kwargs):
+    required_fields = ['thing', 'space', 'name', 'type', 'fs', 'ss']
+    if not all(key in kwargs for key in required_fields):
+        return False
+
+    new_relationship = {field: kwargs[field] for field in required_fields}
+    if 'icon' in kwargs:
+        new_relationship['icon'] = kwargs['icon']
+    else:
+        new_relationship['icon'] = ''
+
+    try:
+        data = load_data()
+        if any(relationship['name'] == new_relationship['name'] for relationship in data.get('relationships', [])):
+            data['relationships'] = [relationship if relationship['name'] != new_relationship['name'] else new_relationship for relationship in data.get('relationships', [])]
+        else:
+            data.setdefault('relationships', []).append(new_relationship)
+
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error creating relationship: {e}")
         return False

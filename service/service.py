@@ -50,3 +50,14 @@ def create_service(data):
             return response(400, message='Failed to create service. Required fields are missing.')
     except Exception as e:
         return response(500, message=str(e))
+
+
+def create_relationship(data):
+    try:
+        result = dao.create_relationship(**data)
+        if result:
+            return response(201, message='Relationship created successfully.')
+        else:
+            return response(400, message='Failed to create relationship. Required fields are missing.')
+    except Exception as e:
+        return response(500, message=str(e))
