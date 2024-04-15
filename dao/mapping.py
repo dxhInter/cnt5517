@@ -1,6 +1,7 @@
 import json
 
 import atlas_manager
+from flask import current_app
 
 
 def load_data():
@@ -163,16 +164,16 @@ def run_app(**kwargs):
     if not all(key in kwargs for key in required_fields):
         return False
     try:
-        data = load_data()
+        print(1)
         app = get_app(kwargs['app_id'])
+        current_app.logger.error(f"App: {app['name']}, ID: {app['id']}")
         if app is None:
             return False
 
         relationship = kwargs['relationship']
-        if relationship not in data.get('relationship', []):
-            return False
+        current_app.logger.error(f"Relationship: {relationship}")
         if relationship == 'order':
-            return atlas_manager.execute_service_order(app, None)
+            return atlas_manager.order(app)
         elif relationship == 'condition':
             return atlas_manager.execute_service_condition(app, None, kwargs['threshold'])
 

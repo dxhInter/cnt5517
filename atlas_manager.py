@@ -5,7 +5,6 @@ import threading
 from flask import current_app
 
 
-
 def execute_service_order(service, result):
     if result is not None:
         print(result[0])
@@ -17,7 +16,8 @@ def execute_service_order(service, result):
     else:
         input = "(1,)"
     print(service)
-    current_app.logger.error(f"Service: {service['name']}, Input: {input}, Thing: {service['thing']['id']}, Entity: {service['entity']}, Space: {service['space']}")
+    current_app.logger.error(
+        f"Service: {service['name']}, Input: {input}, Thing: {service['thing']['id']}, Entity: {service['entity']}, Space: {service['space']}")
     message = json.dumps({
         "Tweet Type": "Service call",
         "Service Name": service['name'],
@@ -57,10 +57,16 @@ def execute_service_condition(service, result, threshold):
     else:
         return False, None
 
+
 def order(app):
-    service_name1 = app['service1']
-    current_app.logger.error(f"Service: {service_name1['name']}, Thing: {service_name1['thing']['id']}, Entity: {service_name1['entity']}, Space: {service_name1['space']}")
+    # print(f"Ordering services...{app}")
+    service_name1 = app["service1"]
+    # print(service_name1)
+    current_app.logger.debug(
+        f"Service: {service_name1['name']}, Thing: {service_name1['thing']['id']}, Entity: {service_name1['entity']}, Space: {service_name1['space']}")
+    print(service_name1)
     res = execute_service_order(service_name1, None)
+    print(f"res is{res}")
     service_name2 = app['service2']
     res2 = execute_service_order(service_name2, res)
     if res2[1]['Status'] == 'Successful':
@@ -68,12 +74,15 @@ def order(app):
 
 
 threadISRunning = False
+
+
 # TODO: 新建一个线程，执行service2，未完成，设置线程睡眠时间
 def new_thread(service_name2, res, threshold):
     if threadISRunning:
         return
     thread = threading.Thread(target=execute_service_condition(), args=(service_name2, res, threshold))
     thread.start()
+
 
 def condition(app, threshold):
     service_name1 = app['service1']
