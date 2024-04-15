@@ -76,7 +76,7 @@ def create_app(data):
 # data包含app_id, threshold
 def run_app(data):
     try:
-        result = dao.run_app(data)
+        result = dao.run_app(**data)
         if result:
             return response(200, result)
         else:

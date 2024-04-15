@@ -158,15 +158,27 @@ def get_app(app_id):
             return app
     return None
 
-def run_app(data):
-    app = get_app(data)['app_id']
-    threshold = get_app(data)['threshold']
-    relationship = app.get('relationships')
-    if relationship == 'order':
-        return atlas_manager.order(app)
-    else:
-        return atlas_manager.condition(app, threshold)
+def run_app(**kwargs):
+    required_fields = ['app_id', 'threshold', 'relationship']
+    if not all(key in kwargs for key in required_fields):
+        return False
+    try:
+        data = load_data()
+        app = get_app(kwargs['app_id'])
+        if app is None:
+            return False
 
+        relationship = kwargs['relationship']
+        if relationship not in data.get('relationship', []):
+            return False
+        if relationship == 'order':
+            return atlas_manager.execute_service_order(app, None)
+        elif relationship == 'condition':
+            return atlas_manager.execute_service_condition(app, None, kwargs['threshold'])
+
+    except Exception as e:
+        print(f"Error running app: {e}")
+        return False
 
 def put_threshold(data):
     return None

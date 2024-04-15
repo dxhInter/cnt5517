@@ -2,12 +2,7 @@ import socket
 import json
 import threading
 
-# 维护一个hashmap，key是thing，value是thing的ip
-# g6 对应 10.20.0.58，g62 对应 10.20.0.22
-things = {
-    'g6': '10.20.0.58',
-    'g62': '10.20.0.22'
-}
+from flask import current_app
 
 
 
@@ -21,7 +16,8 @@ def execute_service_order(service, result):
             input = "(1,)"
     else:
         input = "(1,)"
-
+    print(service)
+    current_app.logger.error(f"Service: {service['name']}, Input: {input}, Thing: {service['thing']['id']}, Entity: {service['entity']}, Space: {service['space']}")
     message = json.dumps({
         "Tweet Type": "Service call",
         "Service Name": service['name'],
@@ -33,7 +29,7 @@ def execute_service_order(service, result):
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # s.connect((service['thing']['ip'], 6668))
-    s.connect((things[service['thing']['id']], 6668))
+    s.connect(("10.20.0.58", 6668))
     s.sendall(bytes(message, 'utf-8'))
     data = s.recv(1024)
     s.close()
@@ -42,7 +38,7 @@ def execute_service_order(service, result):
 
 # 如果result大于设定的阈值，发送消息给thing
 def execute_service_condition(service, result, threshold):
-    if result > therashold:
+    if result > threshold:
         message = json.dumps({
             "Tweet Type": "Service call",
             "Service Name": service['name'],
@@ -53,7 +49,7 @@ def execute_service_condition(service, result, threshold):
         })
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((things[service['thing']['id']], 6668))
+        s.connect(("10.20.0.58", 6668))
         s.sendall(bytes(message, 'utf-8'))
         data = s.recv(1024)
         s.close()
@@ -63,6 +59,7 @@ def execute_service_condition(service, result, threshold):
 
 def order(app):
     service_name1 = app['service1']
+    current_app.logger.error(f"Service: {service_name1['name']}, Thing: {service_name1['thing']['id']}, Entity: {service_name1['entity']}, Space: {service_name1['space']}")
     res = execute_service_order(service_name1, None)
     service_name2 = app['service2']
     res2 = execute_service_order(service_name2, res)
