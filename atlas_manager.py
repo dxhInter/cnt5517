@@ -1,11 +1,11 @@
 import socket
 import json
 import threading
-
+import dao.mapping as mapping
 from flask import current_app
 
 
-def execute_service_order(service, result):
+def execute_service_order(service_name, result):
     if result is not None:
         print(result[0])
         result = result[1]
@@ -15,13 +15,18 @@ def execute_service_order(service, result):
             input = "(1,)"
     else:
         input = "(1,)"
+    print(f"order in {service_name}")
+    data = mapping.load_data()
+    services = data.get('services', [])
+    service = services[1]
     print(service)
-    current_app.logger.error(
-        f"Service: {service['name']}, Input: {input}, Thing: {service['thing']['id']}, Entity: {service['entity']}, Space: {service['space']}")
+    print(service["thing"])
+    print(service["entity"])
+    print(service["space"])
     message = json.dumps({
         "Tweet Type": "Service call",
         "Service Name": service['name'],
-        "Thing ID": service['thing']['id'],
+        "Thing ID": service['thing'],
         "Entity ID": service['entity'],
         "Space ID": service['space'],
         "Service Inputs": input
@@ -62,8 +67,6 @@ def order(app):
     # print(f"Ordering services...{app}")
     service_name1 = app["service1"]
     # print(service_name1)
-    current_app.logger.debug(
-        f"Service: {service_name1['name']}, Thing: {service_name1['thing']['id']}, Entity: {service_name1['entity']}, Space: {service_name1['space']}")
     print(service_name1)
     res = execute_service_order(service_name1, None)
     print(f"res is{res}")
