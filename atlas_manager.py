@@ -4,41 +4,62 @@ import threading
 import dao.mapping as mapping
 from flask import current_app
 
+ip = "10.20.0.58"
+PORT = 6668
+
 
 def execute_service_order(service_name, result):
     if result is not None:
         print(result[0])
         result = result[1]
         if result['Status'] == 'Successful':
-            input = "({},)".format(result['Service Result'])
-        else:
-            input = "(1,)"
-    else:
-        input = "(1,)"
+            # input = "({},)".format(result['Service Result'])
+            print(result['Service Result'])
+    #     else:
+    #         input = "(1,)"
+    # else:
+    #     input = "(1,)"
     print(f"order in {service_name}")
     data = mapping.load_data()
     services = data.get('services', [])
-    service = services[1]
+    for i in range(len(services)):
+        if services[i]['name'] == service_name:
+            break
+    service = services[i]
     print(service)
+    print(service['name'])
     print(service["thing"])
     print(service["entity"])
     print(service["space"])
     message = json.dumps({
         "Tweet Type": "Service call",
-        "Service Name": service['name'],
-        "Thing ID": service['thing'],
-        "Entity ID": service['entity'],
-        "Space ID": service['space'],
-        "Service Inputs": input
+        "Service Name": '{}'.format(service['name']),
+        "Thing ID": "g6",
+        "Entity ID": '{}'.format(service['entity']),
+        "Space ID": "g6Space",
+        "Service Inputs": None
     })
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # s.connect((service['thing']['ip'], 6668))
-    s.connect(("10.20.0.58", 6668))
-    s.sendall(bytes(message, 'utf-8'))
-    data = s.recv(1024)
-    s.close()
-    return True, json.loads(data.decode())
+    print(f"message is {message}")
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as st:
+            global ip, PORT
+            st.connect((ip, PORT))
+            st.sendall(bytes(message, 'utf-8'))
+            data = st.recv(1024)
+        # Validate and decode the JSON response
+        if data:
+            print("Received data:", data)  # Debug line to see what data was received
+            return True, json.loads(data.decode())
+        else:
+            print("No data received")  # Debug line for no data case
+            return False, {"error": "No data received"}
+    except json.JSONDecodeError as e:
+        print("JSON decode error:", e)
+        return False, {"error": "JSON decode error"}
+    except Exception as e:
+        print("Unexpected error:", e)
+        return False, {"error": "Unexpected error"}
 
 
 # 如果result大于设定的阈值，发送消息给thing
@@ -50,7 +71,6 @@ def execute_service_condition(service, result, threshold):
             "Thing ID": service['thing']['id'],
             "Entity ID": service['entity'],
             "Space ID": service['space'],
-            "Service Inputs": "(1,)"
         })
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
