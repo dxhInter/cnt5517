@@ -22,9 +22,9 @@ def json_message(service_name: str, thing_id: str, entity_id: str,space_id: str,
 
     return json.dumps(message)
 
-def send_service_call(service_name,thing, id,space, ip, inputs=None):
+def send_service_call(service_name,thing, entity,space, ip, inputs=None):
     global PORT
-    message = json_message(service_name,thing, id, space,inputs)
+    message = json_message(service_name,thing, entity, space,inputs)
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as st:
             st.connect((ip, PORT))
@@ -64,18 +64,19 @@ def execute_service_order(service_name, result):
     service = services[i]
     res = send_service_call(service['name'],service['thing'], service['entity'],service['space'], ip, ())
     print(f"res1 is {res}")
+    return res
     # print(service)
     # print(service['name'])
-    # print(service["thing"])
-    # print(service["entity"])
-    # print(service["space"])
+    # name = str(service['name'])
+    # thing= str(service['thing'])
+    # entity = str(service['entity'])
+    # space = str(service['space'])
     # message = json.dumps({
     #     "Tweet Type": "Service call",
-    #     "Service Name": '{}'.format(service['name']),
-    #     "Thing ID": "g6",
-    #     "Entity ID": '{}'.format(service['entity']),
-    #     "Space ID": "g6Space",
-    #     "Service Inputs": input
+    #     "Service Name": '{}'.format(name),
+    #     "Thing ID": '{}'.format(thing),
+    #     "Entity ID": '{}'.format(entity),
+    #     "Space ID": '{}'.format(space),
     # })
     #
     # print(f"message is {message}")
@@ -127,11 +128,11 @@ def order(app):
     # print(service_name1)
     print(service_name1)
     res = execute_service_order(service_name1, None)
-    # print(f"res is{res}")
-    # service_name2 = app['service2']
-    # res2 = execute_service_order(service_name2, res)
-    # if res2[1]['Status'] == 'Successful':
-    #     return True, res2[1]['Service Result']
+    print(f"res is{res}")
+    service_name2 = app['service2']
+    res2 = execute_service_order(service_name2, res)
+    if res2[1]['Status'] == 'Successful':
+        return True, res2[1]['Service Result']
 
 
 threadISRunning = False
