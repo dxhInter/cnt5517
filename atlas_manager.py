@@ -49,12 +49,11 @@ def execute_service_order(service_name, result):
         print(result[0])
         result = result[1]
         if result['Status'] == 'Successful':
-            input = None
-            print(result['Service Result'])
+            input = result['Service Result']
         else:
-            input = None
+            input = ()
     else:
-        input = None
+        input = ()
     print(f"order in {service_name}")
     data = mapping.load_data()
     services = data.get('services', [])
@@ -62,7 +61,7 @@ def execute_service_order(service_name, result):
         if services[i]['name'] == service_name:
             break
     service = services[i]
-    res = send_service_call(service['name'],service['thing'], service['entity'],service['space'], ip, ())
+    res = send_service_call(service['name'],service['thing'], service['entity'],service['space'], ip, input)
     print(f"res1 is {res}")
     return res
     # print(service)

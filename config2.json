@@ -98,6 +98,15 @@
       "enabled": true
     },
     {
+      "name": "Check",
+      "id": "Check",
+      "relationship": "order",
+      "service1": "Humidity",
+      "service2": "BlinkGreen",
+      "icon": "",
+      "enabled": true
+    },
+    {
       "name": "Imported1",
       "id": "Imported1",
       "relationship": [
