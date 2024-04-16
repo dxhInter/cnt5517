@@ -1,5 +1,5 @@
 {
-  "things": [
+  "thing": [
     {
       "id": "g6",
       "name": "",
@@ -87,20 +87,20 @@
       "icon": ""
     }
   ],
-  "app": [
+  "apps": [
     {
       "name": "Hello",
       "id": "Hello",
-      "relationship": "condition",
-      "service1" : "TurnOnRedLED",
-      "service2" : "TurnOnGreenLED",
+      "relationship": "order",
+      "service1": "TurnOnRedLED",
+      "service2": "TurnOnGreenLED",
       "icon": "",
       "enabled": true
     },
     {
       "name": "Imported1",
       "id": "Imported1",
-      "relationships": [
+      "relationship": [
         "ImportedRel"
       ],
       "icon": "",
