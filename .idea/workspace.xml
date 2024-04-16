@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9538d40e-9c42-4110-80af-d22f336ece35" name="更改" comment="still working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.iot" beforeDir="false" afterPath="$PROJECT_DIR$/config.iot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dao/mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/dao/mapping.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +163,7 @@
       <workItem from="1713039779057" duration="611000" />
       <workItem from="1713051706305" duration="13112000" />
       <workItem from="1713118849725" duration="124000" />
-      <workItem from="1713216272477" duration="14968000" />
+      <workItem from="1713216272477" duration="16272000" />
     </task>
     <task id="LOCAL-00001" summary="complete create/update thing service relationship function">
       <option name="closed" value="true" />
@@ -269,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713230174554</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="still working">
+      <option name="closed" value="true" />
+      <created>1713231617955</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713231617955</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

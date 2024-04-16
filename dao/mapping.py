@@ -175,7 +175,7 @@ def run_app(**kwargs):
         if relationship == 'order':
             return atlas_manager.order(app)
         elif relationship == 'condition':
-            return atlas_manager.execute_service_condition(app, None, kwargs['threshold'])
+            return atlas_manager.condition(app, kwargs['threshold'])
 
     except Exception as e:
         print(f"Error running app: {e}")
