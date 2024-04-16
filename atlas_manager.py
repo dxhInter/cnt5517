@@ -8,7 +8,8 @@ import message_helper
 ip = "10.20.0.58"
 PORT = 6668
 
-def json_message(service_name: str, thing_id: str, entity_id: str,space_id: str, inputs=()):
+
+def json_message(service_name: str, thing_id: str, entity_id: str, space_id: str, inputs=()):
     message = {
         "Tweet Type": "Service call",
         "Service Name": '{}'.format(service_name),
@@ -22,9 +23,10 @@ def json_message(service_name: str, thing_id: str, entity_id: str,space_id: str,
 
     return json.dumps(message)
 
-def send_service_call(service_name,thing, entity,space, ip, inputs=None):
+
+def send_service_call(service_name, thing, entity, space, ip, inputs=None):
     global PORT
-    message = json_message(service_name,thing, entity, space,inputs)
+    message = json_message(service_name, thing, entity, space, inputs)
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as st:
             st.connect((ip, PORT))
@@ -44,7 +46,9 @@ def send_service_call(service_name,thing, entity,space, ip, inputs=None):
         print("Unexpected error:", e)
         return False, {"error": "Unexpected error"}
 
+
 def execute_service_order(service_name, result):
+    print(1)
     if result is not None:
         print(result[0])
         result = result[1]
@@ -61,64 +65,32 @@ def execute_service_order(service_name, result):
         if services[i]['name'] == service_name:
             break
     service = services[i]
-    res = send_service_call(service['name'],service['thing'], service['entity'],service['space'], ip, input)
+    res = send_service_call(service['name'], service['thing'], service['entity'], service['space'], ip, input)
     print(f"res1 is {res}")
     return res
-    # print(service)
-    # print(service['name'])
-    # name = str(service['name'])
-    # thing= str(service['thing'])
-    # entity = str(service['entity'])
-    # space = str(service['space'])
-    # message = json.dumps({
-    #     "Tweet Type": "Service call",
-    #     "Service Name": '{}'.format(name),
-    #     "Thing ID": '{}'.format(thing),
-    #     "Entity ID": '{}'.format(entity),
-    #     "Space ID": '{}'.format(space),
-    # })
-    #
-    # print(f"message is {message}")
-    # try:
-    #     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as st:
-    #         global ip, PORT
-    #         st.connect((ip, PORT))
-    #         st.sendall(bytes(message, 'utf-8'))
-    #         data = st.recv(1024)
-    #     # Validate and decode the JSON response
-    #     if data:
-    #         print("Received data:", data)  # Debug line to see what data was received
-    #         return True, json.loads(data.decode())
-    #     else:
-    #         print("No data received")  # Debug line for no data case
-    #         return False, {"error": "No data received"}
-    # except json.JSONDecodeError as e:
-    #     print("JSON decode error:", e)
-    #     return False, {"error": "JSON decode error"}
-    # except Exception as e:
-    #     print("Unexpected error:", e)
-    #     return False, {"error": "Unexpected error"}
 
 
 # 如果result大于设定的阈值，发送消息给thing
-def execute_service_condition(service, result, threshold):
-    if result > threshold:
-        message = json.dumps({
-            "Tweet Type": "Service call",
-            "Service Name": service['name'],
-            "Thing ID": service['thing']['id'],
-            "Entity ID": service['entity'],
-            "Space ID": service['space'],
-        })
-
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("10.20.0.58", 6668))
-        s.sendall(bytes(message, 'utf-8'))
-        data = s.recv(1024)
-        s.close()
-        return True, json.loads(data.decode())
+def execute_service_condition(service_name, result, threshold):
+    print("Flag2")
+    if result is not None:
+        result = result[1]
+        if result['Status'] == 'Successful':
+            input = result['Service Result'] + ',' + str(threshold)
+        else:
+            input = ()
     else:
-        return False, None
+        input = ()
+    print(f"condition in {service_name}")
+    data = mapping.load_data()
+    services = data.get('services', [])
+    for i in range(len(services)):
+        if services[i]['name'] == service_name:
+            break
+    service = services[i]
+    res = send_service_call(service['name'], service['thing'], service['entity'], service['space'], ip, input)
+    print(f"res1 is {res}")
+    return res
 
 
 def order(app):
@@ -146,8 +118,12 @@ def new_thread(service_name2, res, threshold):
 
 
 def condition(app, threshold):
+    print("Flag1")
     service_name1 = app['service1']
     res = execute_service_order(service_name1, None)
     service_name2 = app['service2']
+    res2 = execute_service_condition(service_name2, res, threshold)
+    if res2[1]['Status'] == 'Successful':
+        return True, res2[1]['Service Result']
     # 新建一个线程，执行service2
-    new_thread(service_name2, res, threshold)
+    # new_thread(service_name2, res, threshold)
