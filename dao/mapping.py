@@ -1,9 +1,15 @@
 import json
+import time
 
 from flask import current_app
 
-import dao.service_impl as service_impl
+from flask import Flask
 
+app = Flask(__name__)
+
+import dao.service_impl as service_impl
+from util.Singleton import Singleton
+singleton_thread_manager = Singleton()
 
 def load_data():
     try:
@@ -205,6 +211,22 @@ def run_app(**kwargs):
         print(f"Error running app: {e}")
         return False
 
+
+def thread_function(**kwargs):
+    with app.app_context():
+        while not singleton_thread_manager.should_stop():
+            result = run_app(**kwargs)  # Assuming run_app is defined elsewhere and returns a boolean
+            if not result:
+                break  # Exit the loop if the task fails or completes with a specific condition
+            time.sleep(1)
+
+def start_thread(**kwargs):
+    thread = singleton_thread_manager.start_thread(target=thread_function, **kwargs)
+    return thread
+
+
+def stop_thread():
+    return singleton_thread_manager.stop_thread()
 
 def completed_app(app_id):
     try:

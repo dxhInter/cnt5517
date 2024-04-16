@@ -104,5 +104,16 @@ def put_threshold():
     return jsonify(result), result['code']
 
 
+@app.route('/apps/background', methods=['POST'])
+@check_json_request
+def start_thread():
+    result = service.start_thread(request.json)
+    return jsonify(result), result['code']
+
+@app.route('/apps/background/stop', methods=['GET'])
+def stop_thread():
+    result = service.stop_thread()
+    return jsonify(result), result['code']
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8888)

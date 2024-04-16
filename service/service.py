@@ -140,3 +140,25 @@ def delete_app(app_id):
             return response(400, message='Failed to delete app.')
     except Exception as e:
         return response(500, message=str(e))
+
+
+def stop_thread():
+    try:
+        result = dao.stop_thread()
+        if result:
+            return response(200, message='Thread stopped successfully.')
+        else:
+            return response(400, message='Failed to stop thread.')
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def start_thread(data):
+    try:
+        result = dao.start_thread(**data)
+        if result:
+            return response(200, message='Thread started successfully.')
+        else:
+            return response(400, message='Failed to start thread.')
+    except Exception as e:
+        return response(500, message=str(e))
