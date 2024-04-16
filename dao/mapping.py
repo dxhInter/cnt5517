@@ -1,7 +1,8 @@
 import json
 
-import atlas_manager
 from flask import current_app
+
+import dao.service_impl as service_impl
 
 
 def load_data():
@@ -68,12 +69,14 @@ def create_thing(**kwargs):
     except:
         return False
 
-def get_all_services():
+
+def query_all_services():
     data = load_data()
     return data.get('services', [])
 
-def get_services_of_thing(thing_id):
-    services = get_all_services()
+
+def query_service_with_thing(thing_id):
+    services = query_all_services()
     return [service for service in services if service.get('thing') == thing_id]
 
 
@@ -91,7 +94,8 @@ def create_service(**kwargs):
     try:
         data = load_data()
         if any(service['name'] == new_service['name'] for service in data.get('services', [])):
-            data['services'] = [service if service['name'] != new_service['name'] else new_service for service in data.get('services', [])]
+            data['services'] = [service if service['name'] != new_service['name'] else new_service for service in
+                                data.get('services', [])]
         else:
             data.setdefault('services', []).append(new_service)
 
@@ -100,6 +104,7 @@ def create_service(**kwargs):
     except Exception as e:
         print(f"Error creating service: {e}")
         return False
+
 
 # {'thing': 'g6', 'space': 'g6Space', 'name': 'REDANDGREEN', 'type': 'control', 'fs': 'TurnOnRedLED', 'ss': 'TurnOnGreenLED'}
 def create_relationship(**kwargs):
@@ -116,7 +121,9 @@ def create_relationship(**kwargs):
     try:
         data = load_data()
         if any(relationship['name'] == new_relationship['name'] for relationship in data.get('relationships', [])):
-            data['relationships'] = [relationship if relationship['name'] != new_relationship['name'] else new_relationship for relationship in data.get('relationships', [])]
+            data['relationships'] = [
+                relationship if relationship['name'] != new_relationship['name'] else new_relationship for relationship
+                in data.get('relationships', [])]
         else:
             data.setdefault('relationships', []).append(new_relationship)
 
@@ -128,11 +135,17 @@ def create_relationship(**kwargs):
 
 
 def create_app(**kwargs):
-    required_fields = ['name', 'id', 'relationships', 'service1', 'service2', 'enabled']
+    # required_fields = ['name', 'id', 'relationships', 'service1', 'service2', 'enabled']
+    required_fields = ['name', 'id', 'relationship', 'service1', 'service2']
     if not all(key in kwargs for key in required_fields):
         return False
 
     new_app = {field: kwargs[field] for field in required_fields}
+    if 'enabled' in kwargs:
+        new_app['enabled'] = kwargs['enabled']
+    else:
+        new_app['enabled'] = "true"
+
     if 'icon' in kwargs:
         new_app['icon'] = kwargs['icon']
     else:
@@ -159,27 +172,96 @@ def get_app(app_id):
             return app
     return None
 
+
 def run_app(**kwargs):
     required_fields = ['app_id', 'threshold', 'relationship']
     if not all(key in kwargs for key in required_fields):
         return False
     try:
-        print(1)
         app = get_app(kwargs['app_id'])
-        current_app.logger.error(f"App: {app['name']}, ID: {app['id']}")
         if app is None:
+            return False
+        # to check if app is enabled
+        app_enabled = app.get('enabled')
+        if app_enabled == "stopped":
+            current_app.logger.error(f"App is disabled: {app}")
             return False
 
         relationship = kwargs['relationship']
         current_app.logger.error(f"Relationship: {relationship}")
         if relationship == 'order':
-            return atlas_manager.order(app)
-        elif relationship == 'condition':
-            return atlas_manager.condition(app, kwargs['threshold'])
+            # if app run successfully, modify the app status to completed
+            res = service_impl.order(app)
+            if res[0]:
+                completed_app(kwargs['app_id'])
+            return res
 
+        elif relationship == 'condition':
+            res = service_impl.condition(app, kwargs['threshold'])
+            if res[0]:
+                completed_app(kwargs['app_id'])
+            return res
     except Exception as e:
         print(f"Error running app: {e}")
         return False
 
+
+def completed_app(app_id):
+    try:
+        data = load_data()
+        for app in data.get('apps', []):
+            if app['id'] == app_id:
+                app['status'] = 'completed'
+                break
+
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error starting/stopping app: {e}")
+        return False
+
+
 def put_threshold(data):
     return None
+
+
+def query_all_relationships():
+    data = load_data()
+    return data.get('relationships', [])
+
+
+def query_all_apps():
+    data = load_data()
+    return data.get('apps', [])
+
+
+def start_or_stop_app(**kwargs):
+    required_fields = ['app_id', 'enabled']
+    if not all(key in kwargs for key in required_fields):
+        return False
+
+    try:
+        app_id = kwargs['app_id']
+        enabled = kwargs['enabled']
+        data = load_data()
+        for app in data.get('apps', []):
+            if app['id'] == app_id:
+                app['enabled'] = enabled
+                break
+
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error starting/stopping app: {e}")
+        return False
+
+
+def delete_app(app_id):
+    try:
+        data = load_data()
+        data['apps'] = [app for app in data.get('apps', []) if app['id'] != app_id]
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error deleting app: {e}")
+        return False

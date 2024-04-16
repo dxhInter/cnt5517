@@ -24,17 +24,17 @@ def create_thing(data):
         return response(500, message=str(e))
 
 
-def get_all_services():
+def query_all_services():
     try:
-        services = dao.get_all_services()
+        services = dao.query_all_services()
         return response(200, services)
     except Exception as e:
         return response(500, message=str(e))
 
-# 获取指定thing的服务
-def get_services(thing_id):
+# get services with thing_id
+def query_service_with_thing(thing_id):
     try:
-        services = dao.get_services_of_thing(thing_id)
+        services = dao.query_service_with_thing(thing_id)
         return response(200, services)
     except Exception as e:
         return response(500, message=str(e))
@@ -100,5 +100,43 @@ def put_threshold(data):
             return response(200, message='Threshold updated successfully.')
         else:
             return response(400, message='Failed to update threshold.')
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def query_all_relationships():
+    try:
+        relationships = dao.query_all_relationships()
+        return response(200, relationships)
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def query_all_apps():
+    try:
+        apps = dao.query_all_apps()
+        return response(200, apps)
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def start_or_stop_app(data):
+    try:
+        result = dao.start_or_stop_app(**data)
+        if result:
+            return response(200, message='App started/stopped successfully.')
+        else:
+            return response(400, message='Failed to start/stop app.')
+    except Exception as e:
+        return response(500, message=str(e))
+
+
+def delete_app(app_id):
+    try:
+        result = dao.delete_app(app_id)
+        if result:
+            return response(200, message='App deleted successfully.')
+        else:
+            return response(400, message='Failed to delete app.')
     except Exception as e:
         return response(500, message=str(e))

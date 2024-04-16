@@ -118,7 +118,7 @@ def new_thread(service_name2, res, threshold):
 
 
 def condition(app, threshold):
-    print("Flag1")
+    print("condition1")
     service_name1 = app['service1']
     res = execute_service_order(service_name1, None)
     service_name2 = app['service2']
