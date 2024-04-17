@@ -195,7 +195,7 @@ def run_app(**kwargs):
             current_app.logger.error(f"App is disabled: {app}")
             return False
 
-        relationship = kwargs['relationship']
+        relationship = app.get('relationship')
         current_app.logger.error(f"Relationship: {relationship}")
         if relationship == 'order':
             # if app run successfully, modify the app status to completed
