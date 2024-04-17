@@ -53,7 +53,7 @@ def execute_service_order(service_name, result):
         print(result[0])
         result = result[1]
         if result['Status'] == 'Successful':
-            input = result['Service Result']
+            input = ()
         else:
             input = ()
     else:

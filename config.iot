@@ -4,7 +4,7 @@
             "id": "g6",
             "name": "",
             "desc": "",
-            "icon": "null",
+            "icon": null,
             "space": "g6Space",
             "ip": "10.20.0.58"
         }
@@ -65,6 +65,20 @@
             "entity": "DHT11",
             "space": "g6Space",
             "icon": ""
+        },
+        {
+            "thing": "g6",
+            "name": "BlinkRed",
+            "entity": "DHT11",
+            "space": "g6Space",
+            "icon": ""
+        },
+        {
+            "thing": "g6",
+            "name": "TemperatureFah",
+            "entity": "DHT11",
+            "space": "g6Space",
+            "icon": ""
         }
     ],
     "relationships": [
@@ -85,6 +99,15 @@
             "fs": "HumidityCheck",
             "ss": "BlinkGreen",
             "icon": ""
+        },
+        {
+            "thing": "g6",
+            "space": "g6Space",
+            "name": "TemperatureThanRed",
+            "type": "control",
+            "fs": "Temperature",
+            "ss": "BlinkRed",
+            "icon": ""
         }
     ],
     "apps": [
@@ -95,7 +118,8 @@
             "service1": "TurnOnRedLED",
             "service2": "TurnOnGreenLED",
             "icon": "",
-            "enabled": "active"
+            "enabled": "active",
+            "status": "completed"
         },
         {
             "name": "Check",
@@ -112,7 +136,37 @@
             "id": "Check_temp",
             "relationship": "condition",
             "service1": "Temperature",
-            "service2": "BlinkGreen",
+            "service2": "BlinkRed",
+            "enabled": "active",
+            "icon": "",
+            "status": "completed"
+        },
+        {
+            "name": "Check_temp_with_fah",
+            "id": "Check_temp_with_fah",
+            "relationship": "condition",
+            "service1": "TemperatureFah",
+            "service2": "BlinkRed",
+            "enabled": "active",
+            "icon": "",
+            "status": "completed"
+        },
+        {
+            "name": "TurnOffLEDs",
+            "id": "TurnOffLEDs",
+            "relationship": "ORDER",
+            "service1": "TurnOffRedLED",
+            "service2": "TurnOffGreenLED",
+            "enabled": "active",
+            "icon": "",
+            "status": "completed"
+        },
+        {
+            "name": "TurnOnLEDs",
+            "id": "TurnOnLEDs",
+            "relationship": "order",
+            "service1": "TurnOnRedLED",
+            "service2": "TurnOnGreenLED",
             "enabled": "active",
             "icon": "",
             "status": "completed"
