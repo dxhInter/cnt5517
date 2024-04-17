@@ -10,7 +10,8 @@ app = Flask(__name__)
 import dao.service_impl as service_impl
 from util.Singleton import Singleton
 singleton_thread_manager = Singleton()
-
+ipg6 = "10.20.0.58"
+ipe62 = "10.20.0.22"
 def load_data():
     try:
         with open('config.iot', 'r') as f:
@@ -42,8 +43,10 @@ def create_thing(**kwargs):
     desc = kwargs.get('desc')
     icon = kwargs.get('icon')
     space = kwargs.get('space')
-    ip = kwargs.get('ip')
-
+    if id == 'g6':
+        ip = ipg6
+    elif id == 'e62':
+        ip = ipe62
     try:
         new = True
         data = load_data()

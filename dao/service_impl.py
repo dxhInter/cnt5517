@@ -5,7 +5,7 @@ import dao.mapping as mapping
 from flask import current_app
 import message_helper
 
-ip = "10.20.0.58"
+# ip = "10.20.0.58"
 PORT = 6668
 
 
@@ -65,6 +65,12 @@ def execute_service_order(service_name, result):
         if services[i]['name'] == service_name:
             break
     service = services[i]
+    things = data.get('things', [])
+    for i in range(len(things)):
+        if things[i]['id'] == service['thing']:
+            ip = things[i]['ip']
+            break
+    print(service['name'], service['thing'])
     res = send_service_call(service['name'], service['thing'], service['entity'], service['space'], ip, input)
     print(f"res1 is {res}")
     return res
@@ -88,6 +94,11 @@ def execute_service_condition(service_name, result, threshold):
         if services[i]['name'] == service_name:
             break
     service = services[i]
+    things = data.get('things', [])
+    for i in range(len(things)):
+        if things[i]['id'] == service['thing']:
+            ip = things[i]['ip']
+            break
     res = send_service_call(service['name'], service['thing'], service['entity'], service['space'], ip, input)
     print(f"res1 is {res}")
     return res

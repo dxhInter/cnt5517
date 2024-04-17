@@ -7,35 +7,43 @@
             "icon": null,
             "space": "g6Space",
             "ip": "10.20.0.58"
+        },
+        {
+            "id": "e62",
+            "name": "",
+            "desc": "",
+            "icon": null,
+            "space": "e62Space",
+            "ip": "10.20.0.22"
         }
     ],
     "services": [
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "TurnOnRedLED",
             "entity": "LED",
-            "space": "g6Space",
+            "space": "e62Space",
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "TurnOffRedLED",
             "entity": "LED",
-            "space": "g6Space",
+            "space": "e62Space",
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "TurnOnGreenLED",
             "entity": "LED",
-            "space": "g6Space",
+            "space": "e62Space",
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "TurnOffGreenLED",
             "entity": "LED",
-            "space": "g6Space",
+            "space": "e62Space",
             "icon": ""
         },
         {
@@ -60,17 +68,17 @@
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "BlinkGreen",
-            "entity": "DHT11",
-            "space": "g6Space",
+            "entity": "LED",
+            "space": "e62Space",
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "BlinkRed",
-            "entity": "DHT11",
-            "space": "g6Space",
+            "entity": "LED",
+            "space": "e62Space",
             "icon": ""
         },
         {
@@ -81,10 +89,10 @@
             "icon": ""
         },
         {
-            "thing": "g6",
+            "thing": "e62",
             "name": "BTNStatus",
             "entity": "Button",
-            "space": "g6Space",
+            "space": "e62Space",
             "icon": ""
         }
     ],
