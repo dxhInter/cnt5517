@@ -79,6 +79,13 @@
             "entity": "DHT11",
             "space": "g6Space",
             "icon": ""
+        },
+        {
+            "thing": "g6",
+            "name": "BTNStatus",
+            "entity": "Button",
+            "space": "g6Space",
+            "icon": ""
         }
     ],
     "relationships": [
@@ -112,36 +119,6 @@
     ],
     "apps": [
         {
-            "name": "Hello",
-            "id": "Hello",
-            "relationship": "order",
-            "service1": "TurnOnRedLED",
-            "service2": "TurnOnGreenLED",
-            "icon": "",
-            "enabled": "active",
-            "status": "completed"
-        },
-        {
-            "name": "Check",
-            "id": "Check",
-            "relationship": "condition",
-            "service1": "Humidity",
-            "service2": "BlinkGreen",
-            "icon": "",
-            "enabled": "active",
-            "status": "completed"
-        },
-        {
-            "name": "Check_temp",
-            "id": "Check_temp",
-            "relationship": "condition",
-            "service1": "Temperature",
-            "service2": "BlinkRed",
-            "enabled": "active",
-            "icon": "",
-            "status": "completed"
-        },
-        {
             "name": "Check_temp_with_fah",
             "id": "Check_temp_with_fah",
             "relationship": "condition",
@@ -154,7 +131,7 @@
         {
             "name": "TurnOffLEDs",
             "id": "TurnOffLEDs",
-            "relationship": "ORDER",
+            "relationship": "order",
             "service1": "TurnOffRedLED",
             "service2": "TurnOffGreenLED",
             "enabled": "active",

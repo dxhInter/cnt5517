@@ -150,13 +150,15 @@ def create_app(**kwargs):
     if 'enabled' in kwargs:
         new_app['enabled'] = kwargs['enabled']
     else:
-        new_app['enabled'] = "true"
+        new_app['enabled'] = "active"
 
     if 'icon' in kwargs:
         new_app['icon'] = kwargs['icon']
     else:
         new_app['icon'] = ''
-
+    new_app['id'] = str(kwargs['id'])
+    if 'threshold' in kwargs:
+        new_app['threshold'] = kwargs['threshold']
     try:
         data = load_data()
         if any(app['name'] == new_app['name'] for app in data.get('apps', [])):
@@ -286,4 +288,25 @@ def delete_app(app_id):
         return True
     except Exception as e:
         print(f"Error deleting app: {e}")
+        return False
+
+
+def update_app(**kwargs):
+    required_fields = ['app_id']
+    if not all(key in kwargs for key in required_fields):
+        return False
+
+    try:
+        app_id = kwargs['app_id']
+        data = load_data()
+        for app in data.get('apps', []):
+            if app['id'] == app_id:
+                for key in kwargs:
+                    if key != 'app_id':
+                        app[key] = kwargs[key]
+                break
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error updating app: {e}")
         return False

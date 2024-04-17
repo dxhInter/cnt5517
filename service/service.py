@@ -162,3 +162,14 @@ def start_thread(data):
             return response(400, message='Failed to start thread.')
     except Exception as e:
         return response(500, message=str(e))
+
+
+def update_app(data):
+    try:
+        result = dao.update_app(**data)
+        if result:
+            return response(200, message='App updated successfully.')
+        else:
+            return response(400, message='Failed to update app.')
+    except Exception as e:
+        return response(500, message=str(e))

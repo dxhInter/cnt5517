@@ -105,10 +105,18 @@ def start_or_stop_app():
     result = service.start_or_stop_app(request.json)
     return jsonify(result), result['code']
 
-@app.route('/apps/delete/<app_id>', methods=['GET'])
+@app.route('/apps/delete/<app_id>', methods=['DELETE'])
 def delete_app(app_id):
     result = service.delete_app(app_id)
     return jsonify(result), result['code']
+
+@app.route('/apps/update', methods=['PUT'])
+@check_json_request
+def update_app():
+    result = service.update_app(request.json)
+    return jsonify(result), result['code']
+
+
 
 @app.route('/apps/threshold', methods=['POST'])
 def put_threshold():
