@@ -98,8 +98,8 @@
     ],
     "relationships": [
         {
-            "thing": "g6",
-            "space": "g6Space",
+            "thing": "e62",
+            "space": "e62Space",
             "name": "REDANDGREEN",
             "type": "control",
             "fs": "TurnOnRedLED",
@@ -152,6 +152,26 @@
             "relationship": "order",
             "service1": "TurnOnRedLED",
             "service2": "TurnOnGreenLED",
+            "enabled": "active",
+            "icon": "",
+            "status": "completed"
+        },
+        {
+            "name": "Turn_on",
+            "id": "Turn_on",
+            "relationship": "order",
+            "service1": "BTNStatus",
+            "service2": "TurnOnGreenLED",
+            "enabled": "active",
+            "icon": "",
+            "status": "completed"
+        },
+        {
+            "name": "Turn_off",
+            "id": "Turn_off",
+            "relationship": "order",
+            "service1": "BTNStatus",
+            "service2": "TurnOffGreenLED",
             "enabled": "active",
             "icon": "",
             "status": "completed"
