@@ -57,7 +57,15 @@ def query_all_relationships():
     result = service.query_all_relationships()
     return jsonify(result), result['code']
 
-
+# {
+#     "name": "TurnOnLEDs",
+#     "id": "TurnOnLEDs",
+#     "relationship": "order",
+#     "service1": "TurnOnRedLED",
+#     "service2": "TurnOnGreenLED",
+#     "icon": "",
+#     "enabled": "active"
+# }
 @app.route('/apps', methods=['POST'])
 @check_json_request
 def create_app():
@@ -76,14 +84,21 @@ def query_all_apps():
     result = service.query_all_apps()
     return jsonify(result), result['code']
 
-
+# {
+# 	"app_id": "TurnOffLEDs",
+#     "threshold" : "70",
+#     "relationship" : "order"
+# }
 @app.route('/apps/run', methods=['POST'])
 @check_json_request
 def run_app():
     result = service.run_app(request.json)
     return jsonify(result), result['code']
 
-
+# {
+#     "app_id": "Check_temp",
+#     "enabled": "active"
+# }
 @app.route('/apps/startOrStop', methods=['POST'])
 @check_json_request
 def start_or_stop_app():
@@ -103,6 +118,12 @@ def put_threshold():
     result = service.put_threshold(data)
     return jsonify(result), result['code']
 
+
+# {
+# 	"app_id": "Check",
+#     "threshold" : "50",
+#     "relationship" : "condition"
+# }
 
 @app.route('/apps/background', methods=['POST'])
 @check_json_request
