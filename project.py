@@ -110,10 +110,10 @@ def delete_app(app_id):
     result = service.delete_app(app_id)
     return jsonify(result), result['code']
 
-@app.route('/apps/update', methods=['PUT'])
+@app.route('/apps/update/<app_id>', methods=['PUT'])
 @check_json_request
-def update_app():
-    result = service.update_app(request.json)
+def update_app(app_id):
+    result = service.update_app(request.json, app_id)
     return jsonify(result), result['code']
 
 

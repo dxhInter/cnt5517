@@ -154,6 +154,10 @@ def create_app(**kwargs):
         new_app['enabled'] = kwargs['enabled']
     else:
         new_app['enabled'] = "active"
+    if 'status' in kwargs:
+        new_app['status'] = kwargs['status']
+    else:
+        new_app['status'] = "incomplete"
 
     if 'icon' in kwargs:
         new_app['icon'] = kwargs['icon']
@@ -294,13 +298,15 @@ def delete_app(app_id):
         return False
 
 
-def update_app(**kwargs):
-    required_fields = ['app_id']
-    if not all(key in kwargs for key in required_fields):
+def update_app(app_id, **kwargs):
+    # required_fields = ['app_id']
+    # if not all(key in kwargs for key in required_fields):
+    #     return False
+    if app_id is None:
         return False
 
     try:
-        app_id = kwargs['app_id']
+        # app_id = kwargs['app_id']
         data = load_data()
         for app in data.get('apps', []):
             if app['id'] == app_id:

@@ -165,9 +165,9 @@ def start_thread(data):
         return response(500, message=str(e))
 
 
-def update_app(data):
+def update_app(data, app_id):
     try:
-        result = dao.update_app(**data)
+        result = dao.update_app(app_id, **data)
         if result:
             return response(200, message='App updated successfully.')
         else:

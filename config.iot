@@ -127,12 +127,12 @@
     ],
     "apps": [
         {
-            "name": "Check_temp_with_fah",
+            "name": "Check_temp",
             "id": "Check_temp_with_fah",
             "relationship": "condition",
-            "service1": "TemperatureFah",
+            "service1": "Temperature",
             "service2": "BlinkRed",
-            "enabled": "active",
+            "enabled": "stopped",
             "icon": "",
             "status": "completed"
         },
@@ -140,9 +140,9 @@
             "name": "TurnOffLEDs",
             "id": "TurnOffLEDs",
             "relationship": "order",
-            "service1": "TurnOffRedLED",
-            "service2": "TurnOffGreenLED",
-            "enabled": "active",
+            "service1": "TurnOnRedLED",
+            "service2": "TurnOnGreenLED",
+            "enabled": "stopped",
             "icon": "",
             "status": "completed"
         },
@@ -152,7 +152,7 @@
             "relationship": "order",
             "service1": "TurnOnRedLED",
             "service2": "TurnOnGreenLED",
-            "enabled": "active",
+            "enabled": "stopped",
             "icon": "",
             "status": "completed"
         },
@@ -175,6 +175,17 @@
             "enabled": "active",
             "icon": "",
             "status": "completed"
+        },
+        {
+            "name": "Test",
+            "id": "12",
+            "relationship": "condition",
+            "service1": "HumidityCheck",
+            "service2": "BlinkGreen",
+            "enabled": "active",
+            "status": "incomplete",
+            "icon": "",
+            "threshold": "45"
         }
     ]
 }
