@@ -115,7 +115,6 @@ def create_service(**kwargs):
         return False
 
 
-# {'thing': 'g6', 'space': 'g6Space', 'name': 'REDANDGREEN', 'type': 'control', 'fs': 'TurnOnRedLED', 'ss': 'TurnOnGreenLED'}
 def create_relationship(**kwargs):
     required_fields = ['thing', 'space', 'name', 'type', 'fs', 'ss']
     if not all(key in kwargs for key in required_fields):
@@ -205,6 +204,7 @@ def run_app(**kwargs):
         relationship = app.get('relationship')
         current_app.logger.error(f"Relationship: {relationship}")
         if relationship == 'order':
+            running_app(kwargs['app_id'])
             # if app run successfully, modify the app status to completed
             res = service_impl.order(app)
             if res[0]:
@@ -212,6 +212,7 @@ def run_app(**kwargs):
             return res
 
         elif relationship == 'condition':
+            running_app(kwargs['app_id'])
             res = service_impl.condition(app, kwargs['threshold'])
             if res[0]:
                 completed_app(kwargs['app_id'])
@@ -251,6 +252,19 @@ def completed_app(app_id):
         print(f"Error starting/stopping app: {e}")
         return False
 
+def running_app(app_id):
+    try:
+        data = load_data()
+        for app in data.get('apps', []):
+            if app['id'] == app_id:
+                app['status'] = 'running'
+                break
+
+        save_data(data)
+        return True
+    except Exception as e:
+        print(f"Error starting/stopping app: {e}")
+        return False
 
 def put_threshold(data):
     return None

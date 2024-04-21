@@ -127,17 +127,17 @@
     ],
     "apps": [
         {
-            "name": "Check_temp",
+            "name": "Temperature_Monitor_RED",
             "id": "Check_temp_with_fah",
             "relationship": "condition",
             "service1": "Temperature",
             "service2": "BlinkRed",
-            "enabled": "stopped",
+            "enabled": "active",
             "icon": "",
             "status": "completed"
         },
         {
-            "name": "TurnOffLEDs",
+            "name": "TurnOnLEDs",
             "id": "TurnOffLEDs",
             "relationship": "order",
             "service1": "TurnOnRedLED",
@@ -147,12 +147,12 @@
             "status": "completed"
         },
         {
-            "name": "TurnOnLEDs",
+            "name": "TurnOffLEDs",
             "id": "TurnOnLEDs",
             "relationship": "order",
-            "service1": "TurnOnRedLED",
-            "service2": "TurnOnGreenLED",
-            "enabled": "stopped",
+            "service1": "TurnOffRedLED",
+            "service2": "TurnOffGreenLED",
+            "enabled": "active",
             "icon": "",
             "status": "completed"
         },
@@ -177,13 +177,13 @@
             "status": "completed"
         },
         {
-            "name": "Test",
+            "name": "Humidity_Monitor_Green",
             "id": "12",
             "relationship": "condition",
             "service1": "HumidityCheck",
             "service2": "BlinkGreen",
             "enabled": "active",
-            "status": "incomplete",
+            "status": "completed",
             "icon": "",
             "threshold": "45"
         }
