@@ -183,9 +183,19 @@
             "service1": "HumidityCheck",
             "service2": "BlinkGreen",
             "enabled": "active",
-            "status": "completed",
+            "status": "running",
             "icon": "",
             "threshold": "45"
+        },
+        {
+            "name": "Get_Temperature_Humidity",
+            "id": "13",
+            "relationship": "order",
+            "service1": "Temperature",
+            "service2": "Humidity",
+            "enabled": "active",
+            "status": "completed",
+            "icon": ""
         }
     ]
 }

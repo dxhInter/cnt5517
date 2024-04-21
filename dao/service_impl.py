@@ -113,8 +113,8 @@ def order(app):
     print(f"res is{res}")
     service_name2 = app['service2']
     res2 = execute_service_order(service_name2, res)
-    if res2[1]['Status'] == 'Successful':
-        return True, res2[1]['Service Result']
+    if res2[1]['Status'] == 'Successful' and res[1]['Status'] == 'Successful':
+        return True, res2[1]['Service Result'], res[1]['Service Result']
 
 
 threadISRunning = False
@@ -134,7 +134,7 @@ def condition(app, threshold):
     res = execute_service_order(service_name1, None)
     service_name2 = app['service2']
     res2 = execute_service_condition(service_name2, res, threshold)
-    if res2[1]['Status'] == 'Successful':
-        return True, res2[1]['Service Result']
+    if res2[1]['Status'] == 'Successful' and res[1]['Status'] == 'Successful':
+        return True, res2[1]['Service Result'], res[1]['Service Result']
     # 新建一个线程，执行service2
     # new_thread(service_name2, res, threshold)
